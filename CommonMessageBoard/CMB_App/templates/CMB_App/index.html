@@ -1,0 +1,69 @@
+{% load humanize %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Barriecito&family=Kablammo&family=Moo+Lah+Lah&family=Oi&family=Rubik+Bubbles&family=Rubik+Distressed&family=Rubik+Gemstones&family=Rubik+Moonrocks&family=Rubik+Spray+Paint&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'CMB_App/style.css' %}">
+    <title>Home | CMB</title>
+</head>
+<body id="main-page-body" class="pink-bg">
+    <script>
+        // Clear the post input fields
+        function clear() {
+            document.getElementsByName("title")[0].value = "";
+            document.getElementsByName("message")[0].value = "";
+        }
+
+        // Clear inputs and show popup message overlay
+        function popup() {
+            clear();
+            document.getElementById("message-overlay").classList.remove("hidden");
+            document.getElementById("message-overlay").classList.add("visible");
+        }
+
+        // Hide popup message overlay and clear inputs
+        function cancel() {
+            document.getElementById("message-overlay").classList.remove("visible");
+            document.getElementById("message-overlay").classList.add("hidden");
+            clear();
+        }
+    </script>
+
+    <span id="logout" class="barriecito-regular yellow-bg"><a href="{% url 'logout' %}">Log Out</a></span>
+
+    {% for message in messages %}
+        <div class="message-box light-green-bg">
+            <span class="message-title rubik-bubbles-regular">{{ message.title }}</span> <span class="message-by moo-lah-lah-regular">by</span> <span class="message-username rubik-spray-paint-regular">{{ message.user.username }}</span>
+            <br>
+            <span class="message-message bangers-regular">{{ message.message }}</span>
+            <br>
+            <span class="message-date rubik-distressed-regular">{{ message.created|naturaltime }}</span>
+        </div>
+    {% empty %}
+        <span id="no-messages" class="kablammo-regular light-green">No Messages Posted In The Last 24 Hours</span>
+    {% endfor %}
+
+    <button onclick="popup()" id="popup-post-button" class="rubik-spray-paint-regular purple-bg light-green">+</button>
+
+    <div id="message-overlay" class="hidden">
+        <div id="message-overlay-inner" class="light-green-bg">
+            <form method="POST" action="{% url 'post' %}">
+                {% csrf_token %}
+                <span class="oi-regular">Title:</span>
+                <input type="text" name="title" class="rubik-moonrocks-regular">
+                <br>
+                <span class="oi-regular">Message:</span>
+                <br>
+                <input type="text" name="message" class="rubik-moonrocks-regular">
+                <br>
+                <button type="submit" id="post-button" class="yellow-bg light-green">Post</button>
+                <button type="button" onclick="cancel()" id="cancel-button" class="yellow">Cancel</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

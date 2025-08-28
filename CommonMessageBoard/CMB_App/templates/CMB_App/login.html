@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Login | CMB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Barriecito&family=Kablammo&family=Moo+Lah+Lah&family=Oi&family=Rubik+Bubbles&family=Rubik+Distressed&family=Rubik+Gemstones&family=Rubik+Moonrocks&family=Rubik+Spray+Paint&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'CMB_App/style.css' %}">
+</head>
+<body id="login-body">
+    <div id="login-block" class="no-padding">
+        <h1 id="login-text" class="no-margin rubik-distressed-regular dark-green">Login</h1>
+        <form method="POST" action="{% url 'select-password' %}">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" id="login-input" class="rubik-bubbles-regular dark-green"><br>
+            <button type="submit" id="login-button" class="bangers-regular yellow-bg purple">Login</button>
+        </form>
+        <a href="{% url 'create-account' %}" id="login-link" class="oi-regular purple">Create Account</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Barriecito&family=Kablammo&family=Moo+Lah+Lah&family=Oi&family=Rubik+Bubbles&family=Rubik+Distressed&family=Rubik+Gemstones&family=Rubik+Moonrocks&family=Rubik+Spray+Paint&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'CMB_App/style.css' %}">
+    <title>Create Account | CMB</title>
+</head>
+<body id="create-account-body">
+    <div id="create-account-block">
+        <h1 id="create-account-text" class="no-margin rubik-distressed-regular dark-green">Create Account</h1>
+        <form method="POST" action="{% url 'create-account' %}">
+            {% csrf_token %}
+            <span class="rubik-gemstones-regular dark-green">Username:</span>
+            <input type="text" name="username" id="create-account-input" class="rubik-bubbles-regular dark-green">
+            <br>
+            <span id="create-account-little-text" class="rubik-gemstones-regular dark-green">Secret Words (pick 5 secret & 15 normal):</span>
+            <br>
+            {% for i in counter %}
+                <div class="create-account-password">
+                    <select name="{{ i }}_checked" class="bangers-regular dark-green">
+                        <option value="unchecked">Normal Word</option>
+                        <option value="checked">Secret Word</option>
+                    </select>
+                    <input type="text" name="{{ i }}" placeholder="Word #{{ i }}" class="create-account-input rubik-bubbles-regular dark-green">
+                </div>
+            {% endfor %}
+            <br>
+            <button type="submit" id="create-account-button" class="bangers-regular yellow-bg purple">Create Account</button>
+        </form>
+        <a href="{% url 'index' %}" id="create-account-link" class="oi-regular purple">Login</a>
+        <div id="create-account-bottom-spacer"></div>
+    </div>
+</body>
+</html>
