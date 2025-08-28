@@ -51,9 +51,10 @@ def index(request):
     elif request.session.get("logged_in", False):
         # If logged in, display message board
 
-        # Filter all messages from past 24 hours
+        # Filter all messages from past 24 hours (from latest to oldest)
         # Filter help from https://stackoverflow.com/questions/27770837/django-return-count-when-date-stored-last-24-hours
-        messages = Message.objects.filter(created__gte=datetime.now() - timedelta(days=1))
+        # Sort help from https://stackoverflow.com/questions/1470676/how-can-i-tell-the-django-orm-to-reverse-the-order-of-query-results
+        messages = Message.objects.filter(created__gte=datetime.now() - timedelta(days=1)).order_by('-date')
 
         # Display homepage with all recent messages
         return render(request, "CMB_App/index.html", {
