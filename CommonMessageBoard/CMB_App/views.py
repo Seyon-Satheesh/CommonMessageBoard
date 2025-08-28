@@ -1,7 +1,7 @@
 from django.shortcuts import HttpResponse, render, HttpResponseRedirect, redirect
 from random import shuffle
 from datetime import datetime, timedelta
-from django.contrib.humanize.templatetags import humanize
+import time
 
 from .models import User, Message
 
@@ -9,6 +9,9 @@ from .models import User, Message
 def index(request):
     if request.method == "POST":
         # If request method was POST, try verifying credentials
+
+        # Begin with 250ms delay to intrinsically rate limit for security purposes
+        time.sleep(0.25)
 
         # Get username from request data
         username = request.POST.get("username", None)
